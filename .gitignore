@@ -1,0 +1,15 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Live runtime state (never publish private data)
+recordings/
+state.json
+*.log
+yolo11n.onnx
+
+# Keep .env out of the repo — put secrets into a local-only file instead.
+# The daemon reads camwatch.json, whose "token_env_file" points to it:
+.env
+*.secret

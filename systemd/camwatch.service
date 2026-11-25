@@ -1,0 +1,24 @@
+# camwatch — per-user systemd unit (template).
+# Install and adapt:
+#   cp systemd/camwatch.service ~/.config/systemd/user/
+#   edit the two paths below to your checkout, then on the target host:
+#     systemctl --user daemon-reload && systemctl --user enable --now camwatch
+#     journalctl --user -u camwatch    # add -f during bring-up
+
+[Unit]
+Description=CamWatch - windowed IP-camera person monitor (CPU-first)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# The directory that contains camwatch.py, camwatch.json and yolo11n.onnx:
+WorkingDirectory=/YOUR/PATH/camwatch
+ExecStart=/usr/bin/python3 /YOUR/PATH/camwatch/camwatch.py
+# Optional verbose per-frame logging during bring-up:
+#Environment=CAMWATCH_DEBUG=on
+Restart=on-failure
+RestartSec=15
+
+[Install]
+WantedBy=default.target

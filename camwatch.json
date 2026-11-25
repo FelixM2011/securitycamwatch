@@ -1,0 +1,48 @@
+{
+  "_comment": "camwatch deployment config. All _rel keys are resolved relative to this file's directory. TOKEN is NEVER stored in this file by design — it comes from an environment variable or the env_file dotfile (see README §3).",
+
+  "cameras": [
+    {
+      "_note_example_camera": "Example entry — replace ALL values with your own camera. One object per device; 'root' must be the base URL only (scheme + host (+ port if not 80), no path, ideally no trailing slash).",
+      "id": "01",
+      "name": "Front door (example)",
+      "root": "http://192.168.X.Y"
+    }
+  ],
+
+  "model_rel": "yolo11n.onnx",
+  "rec_dir_rel": "recordings",
+
+  "env_file": "",
+  "tg_token_key": "TELEGRAM_BOT_TOKEN",
+  "_note_tg_chat_id": "Numeric Telegram chat id (groups/supergroups are negative). Find it: README §4. Empty value here = dry-run start (everything works, no sending).",
+  "tg_chat_id": "",
+
+  "poll_interval_sec": 2.0,
+  "_note_poll_interval_sec": "Per-camera poll period in seconds. The code clamps any value below the hard floor of 2 s up to 2 s — smaller numbers are ignored by design.",
+
+  "confirm_frames": 3,
+  "_note_confirm_frames": "Consecutive hits required before inference/alert (default 3; single noise blips never fire). Any value below 1 is raised to 1 by the code.",
+  "grace_without_person_sec": 90,
+
+  "conf_threshold": 0.35,
+  "iou_threshold": 0.45,
+
+  "cpu_threads": 2,
+  "_note_cpu_threads": "Inference threads; deliberately low so normal machine work stays smooth (CPU-only inference, GPU untouched).",
+
+  "photo_every_sec": 30,
+  "video_fps_frame_gap": 1.7,
+
+  "windows_by_weekday_min": {
+    "_comment_windows_format": "Minutes since midnight per weekday. Each entry is a half-open [start; end) pair — the stop moment itself counts as OUTSIDE (no polling at that exact minute). Weekday index: Monday = \"0\" ... Sunday = \"6\". An empty list means that day is never polled. All times are local time of the host.",
+    "_note_mon_example": "Mon example only — edit to your own hours (08:00–13:00 and 23:00–midnight here).",
+    "0": [[480, 780], [1380, 1440]],
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": []
+  }
+}

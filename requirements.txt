@@ -1,0 +1,5 @@
+# System Python 3 (no virtualenv required). The daemon itself uses no extra deps:
+# camwatch_lib, detector and camwatch are local modules in this repository.
+onnxruntime>=1.16
+numpy>=1.24
+Pillow>=9.0
